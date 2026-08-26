@@ -1,99 +1,73 @@
 # LucianCosinschi.github.io
 
-A minimal, hand-built Jekyll site — no theme, no CSS framework — that serves as
-a public home for my own Markdown documents and a curated shelf of links.
+A minimal, hand-built Jekyll site — no theme, no CSS framework. One landing page
+(photo, short blurb, and a dated feed of writing & research), with each research
+project on its own page and its working process linked beneath it.
 
 **Privacy boundary:** only what lives inside this repository is ever published.
-Anything with `published: false` in its front matter is excluded from the build
-entirely. Files without front matter are ignored by Jekyll and never appear.
+`published: false` in a file's front matter excludes it from the build. Files
+without front matter are ignored by Jekyll and never appear.
+
+Live: <https://luciancosinschi.github.io>
 
 ---
 
-## The routine
-
-### 1. Add a document
-
-Drop a Markdown file into a folder under `_content/`. The folder name is the
-section. Create a new folder any time — it becomes a new nav entry and index
-page automatically, no config to edit.
+## How content is organised
 
 ```
 _content/
-  thoughts/     ← section "Thoughts"
-  questions/    ← section "Questions"
-  research/     ← section "Research"
+  My Research Project/                 ← a "project"
+    the-main-report.md                 → the REPORT, at /my-research-project/
+    process/                           ← the working trail
+      00-RESEARCH-LOG.md               → /my-research-project/process/00-research-log/
+      memos/A1-....md                  → linked under "Process" on the report
+      digests/DIGEST-A1-....md
+  a-standalone-note.md                 → a feed ITEM, at /a-standalone-note/
 ```
 
-Filenames like `2026-08-22_My_Title.md` are ideal: the date prefix sets the
-document date.
+- **Reports and standalone notes** appear in the dated feed on the home page.
+- **Process files** (anything under a `process/` folder) do **not** appear on the
+  home page. They are listed, each with a short description, under a **Process**
+  section at the bottom of their report — grouped into the research log, evidence
+  memos (ordered A1…A10), and digests.
 
-### 2. Stamp front matter
+Descriptions under Process are derived automatically from each file's subtitle.
+To override one, add `blurb: "..."` (or `summary: "..."`) to that file's front
+matter. To set the note shown in the home feed for a report, add
+`summary: "..."` to the report's front matter.
 
-```bash
-bin/ingest
+## The routine
+
+1. **Add** a project folder (or a single `.md` note) under `_content/`.
+2. **Stamp** front matter — `title`, `date`, `slug` — from the filename/first H1:
+   ```
+   bin/ingest
+   ```
+3. **Review** what will go public, grouped, before pushing:
+   ```
+   bin/check
+   ```
+4. **Preview** locally (optional): `bundle exec jekyll serve` → <http://localhost:4000>
+5. **Push** (GitHub Desktop, or):
+   ```
+   git add -A && git commit -m "Add <project>" && git push
+   ```
+   GitHub Actions builds (custom plugin and all) and deploys.
+
+## Images
+
+Put images in `assets/img/`. Keep them web-sized — optimize large photos, e.g.:
 ```
-
-This adds `title`, `date`, and `slug` to any file that lacks front matter,
-without touching the body. It is safe to run repeatedly. Use `bin/ingest
---dry-run` to preview.
-
-### 3. Review what will go public
-
-```bash
-bin/check
+sips -Z 512 --setProperty formatOptions 72 -s format jpeg input.jpg --out assets/img/profile.jpg
 ```
-
-Prints every document that would publish, grouped by section, plus warnings for
-anything not yet stamped or marked `published: false`. **Run this before every
-push** — it's the safety net against publishing something by accident.
-
-### 4. (Optional) preview locally
-
-```bash
-bundle exec jekyll serve
-```
-
-Then open <http://localhost:4000>.
-
-### 5. Push
-
-```bash
-git add -A
-git commit -m "Add <document>"
-git push
-```
-
-GitHub Actions builds the site (custom plugin and all) and deploys it. The live
-site is <https://LucianCosinschi.github.io>.
-
----
-
-## Per-folder overrides (optional)
-
-Drop a `_section.yml` into any `_content/<folder>/` to override defaults:
-
-```yaml
-title:       "Open Questions"
-description: "Things I haven't resolved."
-order:       10          # lower sorts earlier in the nav; default 100
-```
-
-Everything works without this file; it's only there when you want it.
-
-## Withholding a document
-
-Add `published: false` to its front matter. It disappears from the build, the
-section index, the library, and the home page.
+The profile photo is `assets/img/profile.jpg` (change `avatar:` in `_config.yml`
+to point elsewhere). Oversized originals should be git-ignored.
 
 ## How it's wired
 
 - `_config.yml` — a `content` collection (`output: true`).
-- `_plugins/section_pages.rb` — discovers sections from `_content/` subfolders,
-  assigns permalinks (`/<section>/<slug>/`), generates section index pages, and
-  exposes `site.sections` to the nav.
-- `_layouts/`, `_includes/`, `assets/` — hand-written templates and one CSS file.
-- `.github/workflows/build.yml` — builds with `bundle exec jekyll build` (custom
-  plugins need this; the default GitHub Pages build can't run them) and deploys.
-
-Because of the custom plugin, the repo's **Pages source must be "GitHub
-Actions"** (Settings → Pages), not "Deploy from a branch".
+- `_plugins/section_pages.rb` — classifies each doc as `report` / `process` /
+  `item`, assigns permalinks, and lets templates filter with `where_exp`.
+- `_layouts/` (`home`, `document`, `default`), `_includes/`, `assets/` — hand-written.
+- `.github/workflows/build.yml` — `bundle exec jekyll build` + deploy. The Pages
+  source must be **"GitHub Actions"** (custom plugins can't run on the default build).
