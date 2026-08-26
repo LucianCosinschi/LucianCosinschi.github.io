@@ -1,0 +1,14 @@
+# Jekyll build output & caches
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Local bundle (gems install here when you run `bundle install --path vendor`)
+vendor/
+
+# macOS
+.DS_Store
+
+# LibreOffice / OpenOffice lock files
+.~lock.*#

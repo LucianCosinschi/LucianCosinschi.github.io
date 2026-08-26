@@ -1,0 +1,47 @@
+# ── Site identity ────────────────────────────────────────────────
+title:   Lucian Cosinschi
+tagline: "From knowing to doing."
+author:  Lucian Cosinschi
+# Used for the <meta name="description"> and social previews.
+description: "Thoughts, open questions, and research notes on competence assurance and learning systems."
+
+# Profile photo. Drop your real photo into assets/img/ and point this at it
+# (e.g. /assets/img/profile.jpg). Nothing else needs to change.
+avatar: /assets/img/profile.svg
+
+# ── Contact links (shown under your name) ────────────────────────
+# Handle taken from your CV (linkedin.com/in/cosinschi). Change if it's wrong.
+linkedin: "https://www.linkedin.com/in/cosinschi"
+# Uncomment either of these to add the link — no other edits needed:
+# email:  lucian.cosinschi@gmail.com
+# github: https://github.com/LucianCosinschi
+
+# ── URLs ─────────────────────────────────────────────────────────
+url:     "https://LucianCosinschi.github.io"
+baseurl: ""
+
+# ── Build ────────────────────────────────────────────────────────
+markdown: kramdown
+kramdown:
+  auto_ids: true          # gives every heading an id -> anchor links + TOC
+permalink: pretty
+
+collections:
+  content:
+    output: true          # each document becomes its own page
+
+defaults:
+  - scope:
+      path: ""
+      type: content
+    values:
+      layout: document
+
+# Keep build output and tooling out of the site.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - bin/
+  - README.md
+  - vendor/
+  - .github/
