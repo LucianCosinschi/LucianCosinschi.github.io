@@ -1,0 +1,11 @@
+<ul class="contacts">
+  {%- if site.linkedin -%}
+  <li><a href="{{ site.linkedin }}" rel="me noopener">LinkedIn</a></li>
+  {%- endif -%}
+  {%- if site.email -%}
+  <li><a href="mailto:{{ site.email }}">Email</a></li>
+  {%- endif -%}
+  {%- if site.github -%}
+  <li><a href="{{ site.github }}" rel="me noopener">GitHub</a></li>
+  {%- endif -%}
+</ul>

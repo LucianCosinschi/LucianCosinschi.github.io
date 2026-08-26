@@ -1,0 +1,39 @@
+---
+layout: default
+---
+<section class="profile" aria-labelledby="profile-name">
+  <img class="avatar"
+       src="{{ site.avatar | relative_url }}"
+       alt="Portrait of {{ site.author }}"
+       width="140" height="140">
+  <div class="profile-text">
+    <h1 id="profile-name">{{ site.author }}</h1>
+    <p class="descriptor">{{ site.tagline }}</p>
+    {% include contacts.html %}
+  </div>
+</section>
+
+<section class="bio">
+  {{ content }}
+</section>
+
+<section class="recent" aria-labelledby="recent-heading">
+  <h2 id="recent-heading">Recent</h2>
+  {% assign recent = site.content | sort: "date" | reverse %}
+  {% if recent.size > 0 %}
+  <ul class="doc-list">
+    {%- for doc in recent limit: 5 -%}
+    {%- assign sec = site.sections | where: "slug", doc.section | first -%}
+    <li>
+      <a href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
+      <span class="meta">
+        {%- if sec %}{{ sec.title }} · {% endif -%}
+        <time datetime="{{ doc.date | date_to_xmlschema }}">{{ doc.date | date: "%b %-d, %Y" }}</time>
+      </span>
+    </li>
+    {%- endfor -%}
+  </ul>
+  {% else %}
+  <p class="muted">Nothing published yet.</p>
+  {% endif %}
+</section>

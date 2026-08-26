@@ -1,0 +1,39 @@
+---
+layout: default
+---
+{%- assign sec = site.sections | where: "slug", page.section | first -%}
+<article class="doc">
+  <header class="doc-head">
+    {%- if sec -%}
+    <p class="eyebrow"><a href="{{ sec.url | relative_url }}">{{ sec.title }}</a></p>
+    {%- endif -%}
+    <h1>{{ page.title }}</h1>
+    {%- if page.date -%}
+    <p class="doc-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+    </p>
+    {%- endif -%}
+  </header>
+
+  <nav class="toc" data-toc aria-label="Table of contents" hidden>
+    <h2 class="toc-title">Contents</h2>
+    <ul></ul>
+  </nav>
+
+  <div class="doc-body">
+    {%- comment -%}
+      The layout already prints the title above. If the body opens with its own
+      <h1> (bin/ingest leaves it in place — the file is never modified), drop
+      that first heading only, so the title isn't shown twice.
+    {%- endcomment -%}
+    {%- assign _lead = content | lstrip | slice: 0, 3 -%}
+    {%- if _lead == '<h1' -%}
+      {%- assign _parts = content | split: '</h1>' -%}
+      {{ _parts | slice: 1, 500 | join: '</h1>' }}
+    {%- else -%}
+      {{ content }}
+    {%- endif -%}
+  </div>
+</article>
+
+<script src="{{ '/assets/js/toc.js' | relative_url }}" defer></script>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+{% include head.html %}
+<body class="{{ page.body_class }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      {% include nav.html %}
+    </div>
+  </header>
+
+  <main id="main" class="site-main">
+    <div class="wrap">
+      {{ content }}
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© {{ site.time | date: "%Y" }} {{ site.author }}</p>
+    </div>
+  </footer>
+</body>
+</html>
