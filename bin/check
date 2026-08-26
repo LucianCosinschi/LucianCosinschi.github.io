@@ -1,0 +1,94 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+#
+# bin/check — the pre-push safety net.
+#
+# Prints every document that WOULD go public on the next build, grouped by
+# section, with title and date. It also flags two things that would otherwise
+# be easy to miss:
+#
+#   * files with no front matter  -> "will NOT publish (run bin/ingest first)"
+#   * files marked published:false -> "withheld"
+#
+# Read-only. It never modifies anything. Run it before every push.
+
+require "date"
+
+ROOT    = File.expand_path("..", __dir__)
+CONTENT = File.join(ROOT, "_content")
+
+# Minimal front-matter reader: pulls the leading --- ... --- block and reads
+# simple "key: value" lines. Robust across Ruby versions, no YAML class quirks.
+def read_front_matter(text)
+  return nil unless text.start_with?("---\n") || text.start_with?("---\r\n")
+  lines = text.lines
+  close = lines[1..].index { |l| l.chomp == "---" }
+  return {} if close.nil?
+  data = {}
+  lines[1..close].each do |line|
+    if line.chomp =~ /\A([A-Za-z0-9_-]+):\s*(.*)\z/
+      key = $1
+      val = $2.strip.sub(/\A["']/, "").sub(/["']\z/, "")
+      data[key] = val
+    end
+  end
+  data
+end
+
+def section_of(path)
+  rel = path.sub(CONTENT + File::SEPARATOR, "")
+  rel.split(File::SEPARATOR).first || "—"
+end
+
+files = Dir.glob(File.join(CONTENT, "**", "*.md")).sort
+
+publish   = Hash.new { |h, k| h[k] = [] }   # section => [ [date, title, file] ]
+withheld  = []
+unstamped = []
+
+files.each do |path|
+  fm = read_front_matter(File.read(path))
+  base = path.sub(CONTENT + File::SEPARATOR, "")
+
+  if fm.nil?
+    unstamped << base
+    next
+  end
+  if fm["published"].to_s.strip == "false"
+    withheld << base
+    next
+  end
+
+  date  = fm["date"] || "(no date)"
+  title = fm["title"] || File.basename(path)
+  publish[section_of(path)] << [date, title, base]
+end
+
+puts "═══ Would publish on next push ═══"
+if publish.empty?
+  puts "  (nothing)"
+else
+  publish.keys.sort.each do |section|
+    puts
+    puts "▸ #{section}"
+    publish[section].sort_by { |d, _, _| d.to_s }.reverse.each do |date, title, _file|
+      puts "    #{date}   #{title}"
+    end
+  end
+end
+
+total = publish.values.map(&:length).sum
+puts
+puts "#{total} document#{'s' unless total == 1} would publish across #{publish.size} section#{'s' unless publish.size == 1}."
+
+unless withheld.empty?
+  puts
+  puts "── Withheld (published: false) ──"
+  withheld.sort.each { |f| puts "    #{f}" }
+end
+
+unless unstamped.empty?
+  puts
+  puts "── NOT INGESTED — will NOT publish (run bin/ingest first) ──"
+  unstamped.sort.each { |f| puts "    #{f}" }
+end
