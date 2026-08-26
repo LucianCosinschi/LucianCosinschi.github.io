@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "Digest — A4: Automation's human costs"
 date: 2026-08-24
 slug: digest-a4-automation-human-costs

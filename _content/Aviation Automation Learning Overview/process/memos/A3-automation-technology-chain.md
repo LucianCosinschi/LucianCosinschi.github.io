@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "A3 — The Automation Technology Chain"
 date: 2026-08-24
 slug: a3-automation-technology-chain

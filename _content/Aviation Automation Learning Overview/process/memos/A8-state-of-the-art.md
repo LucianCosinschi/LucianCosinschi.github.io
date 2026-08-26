@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "A8 — The State of the Art in Aviation Training, 2015–August 2026"
 date: 2026-08-25
 slug: a8-state-of-the-art

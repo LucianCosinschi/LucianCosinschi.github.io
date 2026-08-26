@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "A5 — The Institutional and Regulatory Response: How Aviation Rebuilt Pilot Training"
 date: 2026-08-24
 slug: a5-regulatory-training-response

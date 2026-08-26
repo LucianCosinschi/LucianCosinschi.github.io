@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "Digest — A5: The regulatory and training response"
 date: 2026-08-24
 slug: digest-a5-regulatory-training-response

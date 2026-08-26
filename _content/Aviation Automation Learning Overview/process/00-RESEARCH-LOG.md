@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "Research log — aviation automation & the evolution of training"
 date: 2026-08-25
 slug: 00-research-log

@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "A4 — What Automation Did to Pilots: The Empirical Record and the Accident Chain"
 date: 2026-08-24
 slug: a4-automation-human-costs

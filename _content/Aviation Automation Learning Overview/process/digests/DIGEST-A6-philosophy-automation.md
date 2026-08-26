@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "Digest — A6: The philosophy of automation"
 date: 2026-08-24
 slug: digest-a6-philosophy-automation

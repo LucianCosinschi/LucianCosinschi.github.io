@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "A9 — Cross-Domain Export: What Happened When Other Industries Imported Aviation's Answer"
 date: 2026-08-25
 slug: a9-cross-domain-export

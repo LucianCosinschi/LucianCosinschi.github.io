@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "DIGEST — A8: State of the Art, 2015–August 2026"
 date: 2026-08-24
 slug: digest-a8-state-of-the-art

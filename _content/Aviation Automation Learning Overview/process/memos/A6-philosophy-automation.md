@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "A6 — The Philosophical and Theoretical Spine"
 date: 2026-08-25
 slug: a6-philosophy-automation

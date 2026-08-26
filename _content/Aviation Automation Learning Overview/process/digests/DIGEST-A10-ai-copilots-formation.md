@@ -1,4 +1,5 @@
 ---
+feed: false
 title: "DIGEST — A10: AI Copilots, Skill Formation and Professional Education"
 date: 2026-08-25
 slug: digest-a10-ai-copilots-formation
