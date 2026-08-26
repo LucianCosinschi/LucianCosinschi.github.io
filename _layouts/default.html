@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 {% include head.html %}
-<body class="{{ page.body_class }}{% if page.url == '/' %} home{% endif %}{% if page.kind %} kind-{{ page.kind }}{% endif %}">
+<body class="{{ page.body_class }}{% if page.url == '/' %} home{% endif %}{% if page.kind %} kind-{{ page.kind }}{% endif %}{% if page.has_process %} has-process{% endif %}">
   <a class="skip-link" href="#main">Skip to content</a>
 
   {%- if page.url != "/" -%}

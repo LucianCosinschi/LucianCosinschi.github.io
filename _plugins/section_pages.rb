@@ -28,7 +28,22 @@ module ContentRouter
       collection = site.collections["content"]
       return unless collection
 
-      reports_seen = {} # project_slug => true, so only one report claims /<project>/
+      # First pass, per project: whether it has process pages (→ three columns),
+      # and which top-level file is the report — chosen deterministically as the
+      # first by path, so it never depends on dates or iteration order.
+      has_process = {}
+      report_of   = {}
+      collection.docs.each do |doc|
+        rel   = doc.relative_path.sub(%r{\A_?content/}, "")
+        parts = rel.split("/")
+        next if parts.length < 2
+        project = slugify(parts.first)
+        if parts.include?("process")
+          has_process[project] = true
+        elsif report_of[project].nil? || rel < report_of[project]
+          report_of[project] = rel
+        end
+      end
 
       collection.docs.each do |doc|
         rel   = doc.relative_path.sub(%r{\A_?content/}, "")
@@ -51,17 +66,17 @@ module ContentRouter
           doc.data["pnum"]      = (rel[/[\/-]A(\d+)/, 1] || 0).to_i  # A1..A10 ordering
           doc.data["blurb"]   ||= blurb_for(doc)
           doc.data["permalink"] = "/#{project}/process/#{file_slug}/"
+        elsif rel == report_of[project]
+          # The project's report claims /<project>/.
+          doc.data["kind"]        = "report"
+          doc.data["permalink"]   = "/#{project}/"
+          doc.data["has_process"] = has_process[project] ? true : false
+          doc.data["project"]     = project
         else
-          # Top-level file inside a project folder = its report.
-          if reports_seen[project]
-            doc.data["permalink"] = "/#{project}/#{file_slug}/"
-            doc.data["kind"]      = "item"
-          else
-            reports_seen[project] = true
-            doc.data["kind"]      = "report"
-            doc.data["permalink"] = "/#{project}/"
-          end
-          doc.data["project"] = project
+          # Another top-level file in the same folder = a standalone item.
+          doc.data["kind"]      = "item"
+          doc.data["permalink"] = "/#{project}/#{file_slug}/"
+          doc.data["project"]   = project
         end
       end
     end
