@@ -1,0 +1,27 @@
+---
+layout: default
+title: Links
+permalink: /links/
+body_class: links-page
+---
+<header class="section-head">
+  <h1>Links</h1>
+  <p class="lede">A shelf of things worth reading, each with a note on why.</p>
+</header>
+
+<ul class="card-grid">
+  {%- for link in site.data.links -%}
+  <li class="card">
+    <h2 class="card-title">
+      <a href="{{ link.url }}" rel="noopener noreferrer">{{ link.title }}</a>
+    </h2>
+    <p class="card-source">
+      {{ link.source }}{% if link.year %} · {{ link.year }}{% endif %}
+    </p>
+    <p class="card-note">{{ link.note }}</p>
+    {%- if link.tag -%}
+    <p class="card-foot"><span class="tag">{{ link.tag }}</span></p>
+    {%- endif -%}
+  </li>
+  {%- endfor -%}
+</ul>
