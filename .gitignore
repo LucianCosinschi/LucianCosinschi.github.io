@@ -13,5 +13,5 @@ vendor/
 # LibreOffice / OpenOffice lock files
 .~lock.*#
 
-# Large image source (optimized copy is profile.jpg)
-assets/img/Lucian Cosinschi_Close.jpeg
+# Large image sources (optimized copies live alongside as profile.*)
+assets/img/*_Close.*

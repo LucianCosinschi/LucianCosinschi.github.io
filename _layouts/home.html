@@ -1,33 +1,59 @@
 ---
 layout: default
 ---
-<section class="intro">
-  <img class="avatar"
-       src="{{ site.avatar | relative_url }}"
-       alt="Portrait of {{ site.author }}"
-       width="110" height="110">
-  <h1 class="intro-name">{{ site.author }}</h1>
-  <p class="descriptor">{{ site.tagline }}</p>
-  {% include contacts.html %}
-  <div class="blurb">
-    {{ content }}
-  </div>
-</section>
+<div class="home-grid">
 
-{%- assign items = site.content | where_exp: "d", "d.kind == 'report' or d.kind == 'item'" | sort: "date" | reverse -%}
-<section class="feed" aria-labelledby="feed-heading">
-  <h2 id="feed-heading" class="feed-heading">Writing &amp; research</h2>
-  {% if items.size > 0 %}
-  <ul class="feed-list">
-    {%- for it in items -%}
-    <li>
-      <p class="feed-date"><time datetime="{{ it.date | date_to_xmlschema }}">{{ it.date | date: "%B %Y" }}</time></p>
-      <p class="feed-title"><a href="{{ it.url | relative_url }}">{{ it.title }}</a></p>
-      {%- if it.summary %}<p class="feed-note">{{ it.summary }}</p>{% endif -%}
-    </li>
+  <aside class="intro">
+    <img class="avatar"
+         src="{{ site.avatar | relative_url }}"
+         alt="Portrait of {{ site.author }}"
+         width="110" height="110">
+    <h1 class="intro-name">{{ site.author }}</h1>
+    <p class="descriptor">{{ site.tagline }}</p>
+    {% include contacts.html %}
+    <div class="blurb">
+      {{ content }}
+    </div>
+  </aside>
+
+  {%- assign items = site.content | where_exp: "d", "d.kind == 'report' or d.kind == 'item'" | sort: "date" | reverse -%}
+  <section class="feed" aria-labelledby="feed-heading">
+    <h2 id="feed-heading" class="feed-heading">Writing &amp; research</h2>
+    {% if items.size > 0 %}
+    <ul class="feed-list">
+      {%- for it in items -%}
+      <li>
+        <p class="feed-date"><time datetime="{{ it.date | date_to_xmlschema }}">{{ it.date | date: "%B %Y" }}</time></p>
+        <p class="feed-title"><a href="{{ it.url | relative_url }}">{{ it.title }}</a></p>
+        {%- if it.summary %}<p class="feed-note">{{ it.summary }}</p>{% endif -%}
+      </li>
+      {%- endfor -%}
+    </ul>
+    {% else %}
+    <p class="muted">Nothing published yet.</p>
+    {% endif %}
+  </section>
+
+  {%- assign reports = site.content | where: "kind", "report" | sort: "date" | reverse -%}
+  {%- assign allproc = site.content | where: "kind", "process" -%}
+  <aside class="rail" aria-labelledby="rail-heading">
+    {%- if allproc.size > 0 -%}
+    <h2 id="rail-heading" class="rail-heading">Process</h2>
+    {%- for r in reports -%}
+      {%- assign logs    = site.content | where_exp: "d", "d.project == r.project and d.pgroup == 'log'"     | sort: "pnum" -%}
+      {%- assign memos   = site.content | where_exp: "d", "d.project == r.project and d.pgroup == 'memos'"   | sort: "pnum" -%}
+      {%- assign digests = site.content | where_exp: "d", "d.project == r.project and d.pgroup == 'digests'" | sort: "pnum" -%}
+      {%- assign n = logs.size | plus: memos.size | plus: digests.size -%}
+      {%- if n > 0 -%}
+      <p class="rail-project"><a href="{{ r.url | relative_url }}">{{ r.title }}</a></p>
+      <ul class="rail-list">
+        {%- for d in logs -%}<li><a href="{{ d.url | relative_url }}">{{ d.title }}</a></li>{%- endfor -%}
+        {%- for d in memos -%}<li><a href="{{ d.url | relative_url }}">{{ d.title }}</a></li>{%- endfor -%}
+        {%- for d in digests -%}<li><a href="{{ d.url | relative_url }}">{{ d.title }}</a></li>{%- endfor -%}
+      </ul>
+      {%- endif -%}
     {%- endfor -%}
-  </ul>
-  {% else %}
-  <p class="muted">Nothing published yet.</p>
-  {% endif %}
-</section>
+    {%- endif -%}
+  </aside>
+
+</div>
