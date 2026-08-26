@@ -1,13 +1,13 @@
 # ── Site identity ────────────────────────────────────────────────
 title:   Lucian Cosinschi
-tagline: "From knowing to doing."
+tagline: "From wondering to doing."
 author:  Lucian Cosinschi
 # Used for the <meta name="description"> and social previews.
 description: "Thoughts, open questions, and research notes on competence assurance and learning systems."
 
 # Profile photo. Drop your real photo into assets/img/ and point this at it
 # (e.g. /assets/img/profile.jpg). Nothing else needs to change.
-avatar: /assets/img/profile.jpg
+avatar: /assets/img/profile.png
 
 # ── Contact links (shown under your name) ────────────────────────
 # Handle taken from your CV (linkedin.com/in/cosinschi). Change if it's wrong.
