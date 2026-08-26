@@ -128,8 +128,8 @@ a:hover { text-decoration: none; }
 .feed-title a { }
 .feed-note { margin: 0; }
 
-/* ── Home: three-column grid (identity · feed · process) ──── */
-/* Stacked by default; becomes three columns on wide screens. */
+/* ── Home: two-column grid (identity · feed) ──────────────── */
+/* Stacked by default; becomes two columns on wide screens. */
 .home-grid > * { margin-bottom: 44px; }
 .home-grid > *:last-child { margin-bottom: 0; }
 
@@ -137,26 +137,16 @@ a:hover { text-decoration: none; }
   font-size: 0.95rem;
   color: var(--muted);
   font-weight: 600;
-  margin: 0 0 10px;
+  margin: 0 0 4px;
   padding-bottom: 6px;
   border-bottom: 1px solid var(--rule);
 }
-.rail-project { margin: 14px 0 4px; font-weight: 600; font-size: 0.9rem; }
-.rail-project a { color: var(--text); text-decoration: none; }
-.rail-project a:hover { text-decoration: underline; }
-.rail-list { list-style: none; margin: 0 0 18px; padding: 0; }
-.rail-list > li {
-  padding: 6px 0;
-  border-bottom: 1px solid var(--rule);
-  font-size: 0.8rem;
-  line-height: 1.35;
-}
 
-@media (min-width: 80rem) {
-  body.home .wrap { max-width: 80rem; }
+@media (min-width: 66rem) {
+  body.home .wrap { max-width: 64rem; }
   .home-grid {
     display: grid;
-    grid-template-columns: 13rem minmax(0, 44rem) 15rem;
+    grid-template-columns: 14rem minmax(0, 44rem);
     gap: 0 2.5rem;
     align-items: start;
   }
@@ -258,27 +248,67 @@ h1, h2, h3 { line-height: 1.25; }
 }
 .crumb a { color: var(--muted); }
 
-/* ── Report: Process section ──────────────────────────────── */
-.process {
-  margin-top: 48px;
-  padding-top: 8px;
-  border-top: 2px solid var(--rule);
-  max-width: var(--measure);
-}
-.process > h2 { margin: 16px 0 4px; font-size: 1.3rem; }
-.process > h3 {
-  margin: 28px 0 6px;
-  font-size: 1rem;
-  color: var(--muted);
-}
+/* ── Long documents: Contents column + content (+ Process) ─── */
+/* Stacked by default (Contents box on top, then content, then Process below).
+   On wide screens the grid promotes Contents to a sticky left column, and —
+   for reports — Process to a right column. .has-toc is added by toc.js only
+   when a table of contents is actually shown. */
+
+.doc-toc { align-self: start; font-size: 0.85rem; }
+.doc-toc li { line-height: 1.3; }
+
+.back-to-contents { margin: 6px 0 0; text-align: right; font-size: 0.8rem; }
+.back-to-contents a { color: var(--muted); text-decoration: none; }
+.back-to-contents a:hover { color: var(--link); text-decoration: underline; }
+
+.report-rail { margin-top: 48px; padding-top: 8px; border-top: 2px solid var(--rule); }
+.rail-intro { margin: 8px 0 14px; color: var(--muted); font-size: 0.9rem; }
+.report-rail h3 { margin: 22px 0 6px; font-size: 0.95rem; color: var(--muted); }
 .process-list { list-style: none; margin: 0; padding: 0; }
 .process-list > li { padding: 10px 0; border-bottom: 1px solid var(--rule); }
-.process-list > li a { font-weight: 600; }
+.process-list > li a { font-weight: 600; font-size: 0.92rem; }
 .process-blurb {
   display: block;
   margin-top: 2px;
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* Process pages & notes: Contents (left) + content */
+@media (min-width: 62rem) {
+  body.kind-process .wrap,
+  body.kind-item    .wrap { max-width: 60rem; }
+  body.kind-process .doc-grid.has-toc,
+  body.kind-item    .doc-grid.has-toc {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 44rem);
+    gap: 0 2rem;
+    align-items: start;
+  }
+  body.kind-process .doc-grid.has-toc .doc-toc,
+  body.kind-item    .doc-grid.has-toc .doc-toc {
+    position: sticky; top: 1rem;
+    max-height: calc(100vh - 2rem); overflow: auto;
+  }
+}
+
+/* Report: Contents (left) + report (centre) + Process (right) */
+@media (min-width: 80rem) {
+  body.kind-report .wrap { max-width: 78rem; }
+  body.kind-report .doc-grid.has-toc {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 44rem) 15rem;
+    gap: 0 2rem;
+    align-items: start;
+  }
+  body.kind-report .doc-grid.has-toc .doc-toc {
+    position: sticky; top: 1rem;
+    max-height: calc(100vh - 2rem); overflow: auto;
+  }
+  body.kind-report .doc-grid.has-toc .report-rail {
+    margin-top: 0; padding-top: 0; border-top: none;
+  }
 }
 
 /* ── Footer ───────────────────────────────────────────────── */

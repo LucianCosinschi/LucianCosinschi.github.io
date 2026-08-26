@@ -34,26 +34,4 @@ layout: default
     {% endif %}
   </section>
 
-  {%- assign reports = site.content | where: "kind", "report" | sort: "date" | reverse -%}
-  {%- assign allproc = site.content | where: "kind", "process" -%}
-  <aside class="rail" aria-labelledby="rail-heading">
-    {%- if allproc.size > 0 -%}
-    <h2 id="rail-heading" class="rail-heading">Process</h2>
-    {%- for r in reports -%}
-      {%- assign logs    = site.content | where_exp: "d", "d.project == r.project and d.pgroup == 'log'"     | sort: "pnum" -%}
-      {%- assign memos   = site.content | where_exp: "d", "d.project == r.project and d.pgroup == 'memos'"   | sort: "pnum" -%}
-      {%- assign digests = site.content | where_exp: "d", "d.project == r.project and d.pgroup == 'digests'" | sort: "pnum" -%}
-      {%- assign n = logs.size | plus: memos.size | plus: digests.size -%}
-      {%- if n > 0 -%}
-      <p class="rail-project"><a href="{{ r.url | relative_url }}">{{ r.title }}</a></p>
-      <ul class="rail-list">
-        {%- for d in logs -%}<li><a href="{{ d.url | relative_url }}">{{ d.title }}</a></li>{%- endfor -%}
-        {%- for d in memos -%}<li><a href="{{ d.url | relative_url }}">{{ d.title }}</a></li>{%- endfor -%}
-        {%- for d in digests -%}<li><a href="{{ d.url | relative_url }}">{{ d.title }}</a></li>{%- endfor -%}
-      </ul>
-      {%- endif -%}
-    {%- endfor -%}
-    {%- endif -%}
-  </aside>
-
 </div>
