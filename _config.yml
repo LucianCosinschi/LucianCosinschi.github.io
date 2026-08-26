@@ -22,17 +22,22 @@ markdown: kramdown
 kramdown:
   auto_ids: true          # heading ids -> anchor links + table of contents
 
-# Every markdown file in _content/ becomes a page at /<slug>/ and — unless its
-# front matter says `feed: false` — a card on the home page. Front matter:
-#   title:    heading + feed label            (required)
-#   date:     YYYY-MM-DD, orders the feed      (required)
-#   summary:  one line under the feed title    (optional)
-#   slug:     the URL is /<slug>/              (optional; otherwise from title)
-#   feed:     false to keep it off the home    (optional)
+# Every markdown file in _content/ becomes a page whose URL mirrors its path
+# (e.g. _content/aviation-automation/report.md -> /aviation-automation/report/)
+# and — unless its front matter says `feed: false` — a card on the home page.
+# Front matter:
+#   title:      heading + feed label                 (required)
+#   date:       YYYY-MM-DD, orders the feed           (required)
+#   summary:    one line under the feed title         (optional)
+#   feed:       false to keep it off the home page    (optional)
+#   permalink:  override the URL (e.g. a report at its folder root)  (optional)
+# A folder with a `process/` subfolder becomes a "report + Process column":
+# put the main doc's `permalink:` at the folder root, mark the process files
+# `feed: false`, and they appear automatically in a Process column on the report.
 collections:
   content:
     output: true
-    permalink: /:slug/
+    permalink: /:path/          # the URL mirrors the folder path under _content/
 
 defaults:
   - scope: { path: "", type: content }

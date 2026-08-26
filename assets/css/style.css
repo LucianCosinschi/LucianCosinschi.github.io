@@ -176,17 +176,46 @@ h1, h2, h3 { line-height: 1.25; }
 .back-to-contents a { color: var(--muted); text-decoration: none; }
 .back-to-contents a:hover { color: var(--link); text-decoration: underline; }
 
-/* On wide screens, promote Contents to a sticky left column. */
+/* ── A report's Process column (its process/ files) ───────── */
+/* Stacked below the report by default; a right column on wide screens. */
+.report-rail { margin-top: 44px; padding-top: 8px; border-top: 2px solid var(--rule); }
+.rail-heading {
+  font-size: 0.95rem; font-weight: 600; color: var(--muted);
+  margin: 0 0 4px; padding-bottom: 6px; border-bottom: 1px solid var(--rule);
+}
+.rail-intro { margin: 8px 0 14px; color: var(--muted); font-size: 0.9rem; }
+.report-rail h3 { margin: 20px 0 6px; font-size: 0.95rem; color: var(--muted); }
+.process-list { list-style: none; margin: 0; padding: 0; }
+.process-list > li { padding: 8px 0; border-bottom: 1px solid var(--rule); }
+.process-list > li a { font-size: 0.9rem; }
+
+/* Plain docs: promote Contents to a sticky left column. */
 @media (min-width: 54rem) {
-  body.reading .wrap { max-width: 58rem; }
-  .doc-grid.has-toc {
+  body.reading:not(.has-process) .wrap { max-width: 58rem; }
+  body.reading:not(.has-process) .doc-grid.has-toc {
     display: grid;
     grid-template-columns: 12rem minmax(0, 44rem);
     gap: 0 2rem;
     align-items: start;
   }
-  .doc-grid.has-toc .doc-toc {
+  body.reading:not(.has-process) .doc-grid.has-toc .doc-toc {
     position: sticky; top: 1rem;
     max-height: calc(100vh - 2rem); overflow: auto;
   }
+}
+
+/* Reports: Contents (left) + report (centre) + Process (right). */
+@media (min-width: 68rem) {
+  body.has-process .wrap { max-width: 72rem; }
+  body.has-process .doc-grid.has-toc {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 44rem) 13rem;
+    gap: 0 1.5rem;
+    align-items: start;
+  }
+  body.has-process .doc-grid.has-toc .doc-toc {
+    position: sticky; top: 1rem;
+    max-height: calc(100vh - 2rem); overflow: auto;
+  }
+  body.has-process .report-rail { margin-top: 0; padding-top: 0; border-top: none; }
 }

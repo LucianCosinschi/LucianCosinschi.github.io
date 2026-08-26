@@ -1,4 +1,5 @@
 ---
+permalink: /aviation-automation/
 title: "Learning to Fly the Machine That Flies"
 date: 2026-08-25
 slug: aviation-automation-learning-report
@@ -1363,35 +1364,3 @@ Grouped by what they are good for. Full citations with URLs and verification tag
 **The transfer cases:** Amalberti, Auroy, Berwick & Barach (2005), *Annals of Internal Medicine* 142(9). Urbach et al. (2014), *NEJM* 370(11). Haugen et al. (2015), *Annals of Surgery* 261(5). Bion et al. (2013) and Dixon-Woods et al. (2013). MAIB 21/2008 and 22/2017. Cristancho (2024), *Perspectives on Medical Education* 13(1).
 
 **The AI evidence:** Bastani et al., "Generative AI Can Harm Learning," SSRN 4895486. Dell'Acqua et al. (2026), *Organization Science* 37(2). Dell'Acqua (2022), "Falling Asleep at the Wheel." Shen & Tamkin (2026), arXiv 2601.20245. Budzyń et al. (2025), *Lancet Gastro Hepatol* 10(10). Dratsch et al. (2023), *Radiology* 307(4). Yu et al. (2024), *Nature Medicine* 30(3). Scarfe et al. (2024), *PLOS ONE* 19(6). Boyd et al. (2018), *Medical Education* 52(1). ten Cate (2005), *Medical Education* 39(12).
-
----
-
-## Process
-
-The research log and the evidence memos and digests behind this report.
-
-**Research log**
-
-- [Research log — aviation automation & the evolution of training](/00-research-log/)
-
-**Evidence memos**
-
-- [A1 — Foundations, 1903–1980](/a1-foundations-1903-1980/)
-- [Crew Resource Management: Six Generations, Three Technologies, and the Evidence Problem](/a2-crm-and-its-evidence/)
-- [A3 — The Automation Technology Chain](/a3-automation-technology-chain/)
-- [A4 — What Automation Did to Pilots: The Empirical Record and the Accident Chain](/a4-automation-human-costs/)
-- [A5 — The Institutional and Regulatory Response: How Aviation Rebuilt Pilot Training](/a5-regulatory-training-response/)
-- [A6 — The Philosophical and Theoretical Spine](/a6-philosophy-automation/)
-- [A7 — Expertise, Situation Awareness, Organisational Reliability and Learning Transfer](/a7-expertise-sa-hro-transfer/)
-- [A8 — The State of the Art in Aviation Training, 2015–August 2026](/a8-state-of-the-art/)
-- [A9 — Cross-Domain Export: What Happened When Other Industries Imported Aviation's Answer](/a9-cross-domain-export/)
-- [A10 — AI Copilots, Skill Formation and the Response of Professional Education](/a10-ai-copilots-formation/)
-
-**Digests**
-
-- [Digest — A4: Automation's human costs](/digest-a4-automation-human-costs/)
-- [Digest — A5: The regulatory and training response](/digest-a5-regulatory-training-response/)
-- [Digest — A6: The philosophy of automation](/digest-a6-philosophy-automation/)
-- [DIGEST — A8: State of the Art, 2015–August 2026](/digest-a8-state-of-the-art/)
-- [Digest — A9: Cross-domain export and its boundary conditions](/digest-a9-cross-domain-export/)
-- [DIGEST — A10: AI Copilots, Skill Formation and Professional Education](/digest-a10-ai-copilots-formation/)

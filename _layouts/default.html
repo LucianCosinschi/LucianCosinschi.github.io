@@ -1,7 +1,15 @@
 <!doctype html>
 <html lang="en">
 {% include head.html %}
-<body class="{% if page.url == '/' %}home{% else %}reading{% endif %}">
+{%- capture body_class -%}
+{%- if page.url == '/' -%}home
+{%- else -%}reading
+  {%- assign procprefix = page.url | append: 'process/' -%}
+  {%- assign hasproc = site.content | where_exp: "d", "d.url contains procprefix" -%}
+  {%- if hasproc.size > 0 %} has-process{% endif -%}
+{%- endif -%}
+{%- endcapture -%}
+<body class="{{ body_class | strip }}">
   <a class="skip-link" href="#main">Skip to content</a>
 
   {%- if page.url != "/" -%}

@@ -1,6 +1,14 @@
 ---
 layout: default
 ---
+{%- comment -%}
+  A "report" is any page that has documents under <its folder>/process/.
+  Those show up automatically in a Process column — no front matter needed
+  beyond `feed: false` on the process files themselves.
+{%- endcomment -%}
+{%- assign procprefix = page.url | append: 'process/' -%}
+{%- assign allproc = site.content | where_exp: "d", "d.url contains procprefix" | sort: 'url' -%}
+
 <div class="doc-grid">
   <nav class="toc doc-toc" id="contents" data-toc aria-label="Contents" hidden>
     <p class="toc-title">Contents</p>
@@ -18,7 +26,7 @@ layout: default
     </header>
 
     <div class="doc-body">
-      {%- comment -%} If the body opens with its own <h1>, drop it (the title is shown above). {%- endcomment -%}
+      {%- comment -%} If the body opens with its own <h1>, drop it (title is shown above). {%- endcomment -%}
       {%- assign _lead = content | lstrip | slice: 0, 3 -%}
       {%- if _lead == '<h1' -%}
         {%- assign _parts = content | split: '</h1>' -%}
@@ -28,6 +36,37 @@ layout: default
       {%- endif -%}
     </div>
   </article>
+
+  {%- if allproc.size > 0 -%}
+  <aside class="report-rail" aria-labelledby="process-heading">
+    <h2 id="process-heading" class="rail-heading">Process</h2>
+    <p class="rail-intro">The research log, memos, and digests behind this report.</p>
+
+    <ul class="process-list">
+      {%- for d in allproc -%}
+        {%- unless d.url contains '/memos/' or d.url contains '/digests/' -%}
+        <li><a href="{{ d.url | relative_url }}">{{ d.title }}</a></li>
+        {%- endunless -%}
+      {%- endfor -%}
+    </ul>
+
+    {%- assign memos = allproc | where_exp: "d", "d.url contains '/memos/'" -%}
+    {%- if memos.size > 0 -%}
+    <h3>Evidence memos</h3>
+    <ul class="process-list">
+      {%- for d in memos -%}<li><a href="{{ d.url | relative_url }}">{{ d.title }}</a></li>{%- endfor -%}
+    </ul>
+    {%- endif -%}
+
+    {%- assign digests = allproc | where_exp: "d", "d.url contains '/digests/'" -%}
+    {%- if digests.size > 0 -%}
+    <h3>Digests</h3>
+    <ul class="process-list">
+      {%- for d in digests -%}<li><a href="{{ d.url | relative_url }}">{{ d.title }}</a></li>{%- endfor -%}
+    </ul>
+    {%- endif -%}
+  </aside>
+  {%- endif -%}
 </div>
 
 <script src="{{ '/assets/js/toc.js' | relative_url }}" defer></script>
