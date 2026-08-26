@@ -18,6 +18,9 @@
 
 require "date"
 
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
+
 ROOT    = File.expand_path("..", __dir__)
 CONTENT = File.join(ROOT, "_content")
 DRY     = ARGV.include?("--dry-run")

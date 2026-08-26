@@ -1,35 +1,29 @@
 ---
 layout: default
 ---
-<section class="profile" aria-labelledby="profile-name">
+<section class="intro">
   <img class="avatar"
        src="{{ site.avatar | relative_url }}"
        alt="Portrait of {{ site.author }}"
-       width="72" height="72">
-  <div class="profile-text">
-    <h1 id="profile-name">{{ site.author }}</h1>
-    <p class="descriptor">{{ site.tagline }}</p>
-    {% include contacts.html %}
+       width="110" height="110">
+  <h1 class="intro-name">{{ site.author }}</h1>
+  <p class="descriptor">{{ site.tagline }}</p>
+  {% include contacts.html %}
+  <div class="blurb">
+    {{ content }}
   </div>
 </section>
 
-<section class="bio">
-  {{ content }}
-</section>
-
-<section class="recent" aria-labelledby="recent-heading">
-  <h2 id="recent-heading">Recent</h2>
-  {% assign recent = site.content | sort: "date" | reverse %}
-  {% if recent.size > 0 %}
-  <ul class="doc-list">
-    {%- for doc in recent limit: 5 -%}
-    {%- assign sec = site.sections | where: "slug", doc.section | first -%}
+{%- assign items = site.content | where_exp: "d", "d.kind == 'report' or d.kind == 'item'" | sort: "date" | reverse -%}
+<section class="feed" aria-labelledby="feed-heading">
+  <h2 id="feed-heading" class="feed-heading">Writing &amp; research</h2>
+  {% if items.size > 0 %}
+  <ul class="feed-list">
+    {%- for it in items -%}
     <li>
-      <a href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
-      <span class="meta">
-        {%- if sec %}{{ sec.title }} · {% endif -%}
-        <time datetime="{{ doc.date | date_to_xmlschema }}">{{ doc.date | date: "%b %-d, %Y" }}</time>
-      </span>
+      <p class="feed-date"><time datetime="{{ it.date | date_to_xmlschema }}">{{ it.date | date: "%B %Y" }}</time></p>
+      <p class="feed-title"><a href="{{ it.url | relative_url }}">{{ it.title }}</a></p>
+      {%- if it.summary %}<p class="feed-note">{{ it.summary }}</p>{% endif -%}
     </li>
     {%- endfor -%}
   </ul>

@@ -1,28 +1,25 @@
 # _plugins/section_pages.rb
 #
-# Folders in _content/ become sections, automatically. Drop a new folder in,
-# add documents, and this plugin does three things with zero config edits:
+# Turns the _content/ tree into a small hub-and-spoke site:
 #
-#   1. Tags each content document with its `section` (the first path segment
-#      under _content/) and gives it a permalink of  /<section>/<slug>/
-#   2. Generates one index page per section, listing that section's documents.
-#   3. Publishes the ordered list of sections to Liquid as `site.sections`
-#      so the nav can render itself.
+#   _content/<project>/<report>.md          -> a REPORT   at /<project>/
+#   _content/<project>/process/**/*.md       -> PROCESS pages at /<project>/process/<slug>/
+#   _content/<note>.md                        -> a standalone ITEM at /<note>/
 #
-# Optional per-folder override — _content/<folder>/_section.yml:
-#     title:       "Nicely Cased Title"     # default: humanised folder name
-#     description: "One line for the index"  # default: none
-#     order:       10                        # lower sorts earlier; default 100
+# Reports and items make up the dated feed on the home page. Process pages do
+# not appear on the home page — they are listed, with a short description, on
+# their report's page under "Process".
 #
-# The plugin reads the *parsed collection*, so documents without front matter
-# (not yet run through bin/ingest) and those marked `published: false` are
-# already excluded by Jekyll — nothing here can leak them.
+# Each doc is tagged so the templates can filter with where_exp:
+#   kind    : "report" | "process" | "item"
+#   project : slug of the owning project folder (report + its process pages)
+#   pgroup  : "log" | "memos" | "digests"   (process pages only)
+#   blurb   : a derived one-line description (process pages, when derivable)
+#
+# The plugin reads the parsed collection, so files without front matter (not yet
+# run through bin/ingest) and `published: false` docs are already excluded.
 
-require "yaml"
-
-module SectionPages
-  DEFAULT_ORDER = 100
-
+module ContentRouter
   class Generator < Jekyll::Generator
     safe false
     priority :low
@@ -31,83 +28,78 @@ module SectionPages
       collection = site.collections["content"]
       return unless collection
 
-      sections = {} # slug => { :docs, :title, :description, :order }
+      reports_seen = {} # project_slug => true, so only one report claims /<project>/
 
       collection.docs.each do |doc|
-        slug = section_slug(doc)
-        next unless slug # skip loose files sitting directly in _content/
+        rel   = doc.relative_path.sub(%r{\A_?content/}, "")
+        parts = rel.split("/")
+        file_slug = doc.data["slug"] || slugify(File.basename(rel, File.extname(rel)))
 
-        doc.data["section"] = slug
-        doc.data["slug"]  ||= document_slug(doc)
-        doc.data["permalink"] ||= "/#{slug}/#{doc.data['slug']}/"
+        if parts.length == 1
+          # Standalone note directly in _content/
+          doc.data["kind"]      = "item"
+          doc.data["permalink"] = "/#{file_slug}/"
+          next
+        end
 
-        sections[slug] ||= section_meta(site, slug)
-        sections[slug][:docs] << doc
+        project = slugify(parts.first)
+
+        if parts.include?("process")
+          doc.data["kind"]      = "process"
+          doc.data["project"]   = project
+          doc.data["pgroup"]    = group_for(parts)
+          doc.data["pnum"]      = (rel[/[\/-]A(\d+)/, 1] || 0).to_i  # A1..A10 ordering
+          doc.data["blurb"]   ||= blurb_for(doc)
+          doc.data["permalink"] = "/#{project}/process/#{file_slug}/"
+        else
+          # Top-level file inside a project folder = its report.
+          if reports_seen[project]
+            doc.data["permalink"] = "/#{project}/#{file_slug}/"
+            doc.data["kind"]      = "item"
+          else
+            reports_seen[project] = true
+            doc.data["kind"]      = "report"
+            doc.data["permalink"] = "/#{project}/"
+          end
+          doc.data["project"] = project
+        end
       end
-
-      ordered = sections.keys.sort_by do |slug|
-        [sections[slug][:order], sections[slug][:title].downcase]
-      end
-
-      nav = []
-      ordered.each do |slug|
-        meta = sections[slug]
-        site.pages << SectionIndex.new(site, slug, meta)
-        nav << {
-          "slug"  => slug,
-          "title" => meta[:title],
-          "url"   => "/#{slug}/",
-          "order" => meta[:order],
-        }
-      end
-
-      # Exposed to templates as `site.sections`.
-      site.config["sections"] = nav
     end
 
     private
 
-    # First path segment beneath _content/ (nil for a file directly in _content/).
-    def section_slug(doc)
-      rel   = doc.relative_path.sub(%r{\A_?content/}, "")
-      parts = rel.split("/")
-      parts.length < 2 ? nil : parts.first
+    def slugify(str)
+      str.downcase.gsub(/[^a-z0-9]+/, "-").gsub(/\A-+|-+\z/, "")
     end
 
-    # Fallback slug if a document somehow lacks one: filename, date prefix
-    # stripped, kebab-cased. (bin/ingest normally supplies `slug` in front matter.)
-    def document_slug(doc)
-      base = File.basename(doc.path, File.extname(doc.path))
-      base = base.sub(/\A\d{4}-\d{2}-\d{2}[_-]/, "")
-      base.downcase.gsub(/[^a-z0-9]+/, "-").gsub(/\A-+|-+\z/, "")
+    def group_for(parts)
+      return "memos"   if parts.include?("memos")
+      return "digests" if parts.include?("digests")
+      "log"
     end
 
-    def section_meta(site, slug)
-      meta = { docs: [], title: humanize(slug), description: nil, order: DEFAULT_ORDER }
-      path = File.join(site.source, "_content", slug, "_section.yml")
-      if File.exist?(path)
-        yml = YAML.safe_load(File.read(path)) || {}
-        meta[:title]       = yml["title"]       unless yml["title"].to_s.empty?
-        meta[:description] = yml["description"] unless yml["description"].to_s.empty?
-        meta[:order]       = yml["order"]       if yml.key?("order")
+    # First descriptive "## ..." subtitle (skips short/generic or numbered ones)
+    # or, failing that, the first plain paragraph. Returns nil if nothing fits.
+    def blurb_for(doc)
+      doc.content.each_line do |line|
+        line = line.strip
+        if line =~ /\A\#{2,3}\s+(.+)/
+          text = clean($1)
+          return text if text.length > 25 && text !~ /\A\d/
+        end
       end
-      meta
+      # fallback: first non-heading, non-blank, non-metadata line
+      doc.content.each_line do |line|
+        s = line.strip
+        next if s.empty? || s.start_with?("#", "---", ">", "|")
+        text = clean(s)
+        return text[0, 180] if text.length > 25
+      end
+      nil
     end
 
-    def humanize(slug)
-      slug.tr("-_", "  ").split(" ").map(&:capitalize).join(" ")
-    end
-  end
-
-  # A section index page that exists only in memory (no source file on disk).
-  class SectionIndex < Jekyll::PageWithoutAFile
-    def initialize(site, slug, meta)
-      super(site, site.source, slug, "index.html")
-      data["layout"]      = "section"
-      data["section"]     = slug
-      data["title"]       = meta[:title]
-      data["description"] = meta[:description]
-      data["permalink"]   = "/#{slug}/"
+    def clean(text)
+      text.gsub(/[`*_]/, "").gsub(/\[([^\]]+)\]\([^)]+\)/, '\1').strip
     end
   end
 end
