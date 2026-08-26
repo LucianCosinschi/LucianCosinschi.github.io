@@ -1,0 +1,396 @@
+/* ─────────────────────────────────────────────────────────────
+   Lucian Cosinschi — hand-written stylesheet.
+   No framework, no preprocessor. Design tokens live in :root and
+   are swapped wholesale under prefers-color-scheme: dark.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* Palette — light */
+  --bg:        #fbfaf7;
+  --surface:   #ffffff;
+  --text:      #23201b;
+  --text-soft: #5c574e;
+  --muted:     #857f74;
+  --rule:      #e7e2d8;
+  --link:      #7a4b1e;
+  --link-hover:#5a3512;
+  --accent:    #7a4b1e;
+  --tag-bg:    #efe9dd;
+  --tag-text:  #5c574e;
+  --focus:     #3b6ea5;
+
+  /* Type */
+  --font-body: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  --font-ui:   system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --fs-body:   1.125rem;   /* ~18px */
+  --lh-body:   1.65;
+  --measure:   68ch;
+
+  /* Space (rem, scales gently) */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:        #17150f;
+    --surface:   #1f1c16;
+    --text:      #ece7dc;
+    --text-soft: #c3bcac;
+    --muted:     #928b7c;
+    --rule:      #322d24;
+    --link:      #d9a978;
+    --link-hover:#ecc79c;
+    --accent:    #d9a978;
+    --tag-bg:    #2a251c;
+    --tag-text:  #c3bcac;
+    --focus:     #8fb6e0;
+  }
+}
+
+/* ── Reset-ish ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; }
+
+/* ── Layout container ─────────────────────────────────────── */
+.wrap {
+  width: 100%;
+  max-width: 46rem;         /* comfortable column for prose + chrome */
+  margin-inline: auto;
+  padding-inline: var(--s-5);
+}
+
+.site-main { padding-block: var(--s-7) var(--s-8); }
+
+/* ── Links ────────────────────────────────────────────────── */
+a { color: var(--link); text-underline-offset: 0.15em; }
+a:hover { color: var(--link-hover); }
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--surface);
+  color: var(--text);
+  padding: var(--s-2) var(--s-4);
+  border: 1px solid var(--rule);
+  z-index: 10;
+}
+.skip-link:focus { left: var(--s-4); top: var(--s-4); }
+
+/* ── Header + nav ─────────────────────────────────────────── */
+.site-header {
+  border-bottom: 1px solid var(--rule);
+  padding-block: var(--s-4);
+}
+.site-header .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-3) var(--s-5);
+  justify-content: space-between;
+}
+.wordmark {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: var(--text);
+}
+.wordmark:hover { color: var(--accent); }
+
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;            /* wraps rather than collapsing to a burger */
+  gap: var(--s-3) var(--s-5);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+}
+.site-nav a {
+  text-decoration: none;
+  color: var(--text-soft);
+}
+.site-nav a:hover { color: var(--accent); }
+.site-nav a[aria-current="page"] {
+  color: var(--text);
+  border-bottom: 2px solid var(--accent);
+}
+
+/* ── Home: profile block ──────────────────────────────────── */
+.profile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-5);
+  margin-bottom: var(--s-6);
+}
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  flex: none;
+}
+.profile-text { min-width: 0; }
+.profile h1 {
+  margin: 0 0 var(--s-1);
+  font-size: 1.9rem;
+  line-height: 1.15;
+}
+.descriptor {
+  margin: 0 0 var(--s-3);
+  color: var(--text-soft);
+  font-style: italic;
+}
+
+.contacts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+}
+.contacts a { text-decoration: none; }
+.contacts a:hover { text-decoration: underline; }
+
+.bio { max-width: var(--measure); }
+.bio p { margin: 0 0 var(--s-4); }
+
+/* ── Section / list headings ──────────────────────────────── */
+.section-head, .prose > h1, .doc-head { max-width: var(--measure); }
+.section-head h1 { margin: 0 0 var(--s-2); }
+.lede {
+  color: var(--text-soft);
+  font-size: 1.2rem;
+  margin: 0 0 var(--s-5);
+  max-width: var(--measure);
+}
+
+.recent { margin-top: var(--s-7); }
+.recent h2 {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: var(--s-2);
+}
+
+/* ── Document lists ───────────────────────────────────────── */
+.doc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: var(--measure);
+}
+.doc-list > li {
+  padding-block: var(--s-3);
+  border-bottom: 1px solid var(--rule);
+}
+.doc-list a {
+  font-size: 1.15rem;
+  text-decoration: none;
+}
+.doc-list a:hover { text-decoration: underline; }
+.doc-list .meta {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: var(--s-1);
+}
+.doc-summary { margin: var(--s-2) 0 0; color: var(--text-soft); }
+
+/* Library groups */
+.prose section { margin-bottom: var(--s-6); }
+.prose section > h2 {
+  font-family: var(--font-ui);
+  font-size: 1.1rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: var(--s-2);
+  max-width: var(--measure);
+}
+.prose section > h2 a { text-decoration: none; color: var(--text); }
+.prose section > h2 a:hover { color: var(--accent); }
+
+/* ── A single document ────────────────────────────────────── */
+.doc { max-width: var(--measure); }
+.doc-head { margin-bottom: var(--s-5); }
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 var(--s-2);
+}
+.eyebrow a { text-decoration: none; }
+.doc-head h1 { margin: 0 0 var(--s-2); line-height: 1.15; }
+.doc-meta {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+}
+
+.doc-body { max-width: var(--measure); }
+.doc-body h2 { margin-top: var(--s-6); line-height: 1.2; }
+.doc-body h3 { margin-top: var(--s-5); }
+.doc-body p, .doc-body li { }
+.doc-body ul, .doc-body ol { padding-left: var(--s-5); }
+.doc-body blockquote {
+  margin: var(--s-5) 0;
+  padding-left: var(--s-4);
+  border-left: 3px solid var(--rule);
+  color: var(--text-soft);
+  font-style: italic;
+}
+.doc-body hr { border: none; border-top: 1px solid var(--rule); margin: var(--s-6) 0; }
+
+/* Table of contents (revealed by JS when > 4 h2s) */
+.toc {
+  margin: var(--s-5) 0;
+  padding: var(--s-4) var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  font-family: var(--font-ui);
+}
+.toc[hidden] { display: none; }
+.toc-title {
+  margin: 0 0 var(--s-2);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: var(--s-1) 0; }
+.toc a { text-decoration: none; font-size: 0.95rem; }
+.toc a:hover { text-decoration: underline; }
+
+/* ── Links page cards ─────────────────────────────────────── */
+.card-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-5);
+}
+@media (min-width: 40rem) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+/* Let the Links grid (and only it) use a wider column on big screens. */
+.links-page .wrap { max-width: 64rem; }
+@media (min-width: 62rem) {
+  .links-page .card-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+}
+.card-title { margin: 0; font-size: 1.15rem; line-height: 1.25; }
+.card-title a { text-decoration: none; }
+.card-title a:hover { text-decoration: underline; }
+.card-source {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.card-note { margin: 0; color: var(--text-soft); font-size: 1rem; }
+.card-foot { margin-top: auto; }
+.tag {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  padding: 0.15em 0.6em;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-radius: 999px;
+}
+
+/* ── Prose defaults (Background etc.) ─────────────────────── */
+.prose { max-width: var(--measure); }
+.prose p { margin: 0 0 var(--s-4); }
+.prose h2 { margin-top: var(--s-6); }
+
+/* ── Overflow guards: tables, code, long URLs ─────────────── */
+.doc-body pre, .prose pre {
+  overflow-x: auto;
+  padding: var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.doc-body code, .prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+.doc-body :not(pre) > code, .prose :not(pre) > code {
+  background: var(--tag-bg);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+.doc-body table, .prose table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.doc-body th, .doc-body td, .prose th, .prose td {
+  border: 1px solid var(--rule);
+  padding: var(--s-2) var(--s-3);
+  text-align: left;
+}
+.doc-body a, .prose a { overflow-wrap: anywhere; }
+
+/* ── Footer ───────────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding-block: var(--s-5);
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+
+.muted { color: var(--muted); }
