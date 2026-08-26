@@ -2,26 +2,21 @@
 layout: default
 title: Links
 permalink: /links/
-body_class: links-page
 ---
 <header class="section-head">
   <h1>Links</h1>
   <p class="lede">A shelf of things worth reading, each with a note on why.</p>
 </header>
 
-<ul class="card-grid">
+<ul class="link-list">
   {%- for link in site.data.links -%}
-  <li class="card">
-    <h2 class="card-title">
-      <a href="{{ link.url }}" rel="noopener noreferrer">{{ link.title }}</a>
-    </h2>
-    <p class="card-source">
+  <li>
+    <p class="link-title"><a href="{{ link.url }}" rel="noopener noreferrer">{{ link.title }}</a></p>
+    <p class="link-source">
       {{ link.source }}{% if link.year %} · {{ link.year }}{% endif %}
     </p>
-    <p class="card-note">{{ link.note }}</p>
-    {%- if link.tag -%}
-    <p class="card-foot"><span class="tag">{{ link.tag }}</span></p>
-    {%- endif -%}
+    <p class="link-note">{{ link.note }}</p>
+    {%- if link.tag -%}<p class="link-tag">{{ link.tag }}</p>{%- endif -%}
   </li>
   {%- endfor -%}
 </ul>

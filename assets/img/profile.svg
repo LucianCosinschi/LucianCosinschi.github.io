@@ -1,12 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" role="img" aria-label="Placeholder portrait">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#e9e2d5"/>
-      <stop offset="1" stop-color="#d8cdb8"/>
-    </linearGradient>
-  </defs>
-  <circle cx="140" cy="140" r="140" fill="url(#g)"/>
-  <text x="140" y="140" dy="0.35em" text-anchor="middle"
-        font-family="Georgia, 'Times New Roman', serif" font-size="120"
-        fill="#7a4b1e" opacity="0.85">LC</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" role="img" aria-label="Placeholder portrait">
+  <circle cx="72" cy="72" r="72" fill="#e0e0e0"/>
+  <text x="72" y="72" dy="0.35em" text-anchor="middle"
+        font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="56"
+        fill="#8a8a8a">LC</text>
 </svg>
