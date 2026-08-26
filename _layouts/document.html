@@ -1,66 +1,33 @@
 ---
 layout: default
 ---
-{%- if page.kind == "process" -%}
-  {%- assign report = site.content | where_exp: "d", "d.project == page.project and d.kind == 'report'" | first -%}
-  {%- if report -%}
-  <p class="crumb"><a href="{{ report.url | relative_url }}">{{ report.title }}</a> · Process</p>
-  {%- endif -%}
-{%- endif -%}
-
-{%- assign proc = "" -%}
-{%- if page.kind == "report" -%}
-  {%- assign proc = site.content | where_exp: "d", "d.project == page.project and d.kind == 'process'" -%}
-{%- endif -%}
-
-<div class="doc-grid{% if page.kind == 'report' and proc.size > 0 %} has-rail{% endif %}">
-
+<div class="doc-grid">
   <nav class="toc doc-toc" id="contents" data-toc aria-label="Contents" hidden>
     <p class="toc-title">Contents</p>
     <ul></ul>
   </nav>
 
-  <div class="doc-main">
-    {% include doc_article.html %}
-  </div>
+  <article class="doc">
+    <header class="doc-head">
+      <h1>{{ page.title }}</h1>
+      {%- if page.date -%}
+      <p class="doc-meta">
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+      </p>
+      {%- endif -%}
+    </header>
 
-  {%- if page.kind == "report" and proc.size > 0 -%}
-  <aside class="report-rail" aria-labelledby="process-heading">
-    <h2 id="process-heading" class="rail-heading">Process</h2>
-    <p class="rail-intro">The research log and the evidence memos and digests behind this report.</p>
-
-    {%- assign logs    = proc | where: "pgroup", "log"     | sort: "pnum" -%}
-    {%- assign memos   = proc | where: "pgroup", "memos"   | sort: "pnum" -%}
-    {%- assign digests = proc | where: "pgroup", "digests" | sort: "pnum" -%}
-
-    {%- if logs.size > 0 -%}
-    <ul class="process-list">
-      {%- for d in logs -%}
-      <li><a href="{{ d.url | relative_url }}">{{ d.title }}</a>{% if d.blurb %}<span class="process-blurb">{{ d.blurb }}</span>{% endif %}</li>
-      {%- endfor -%}
-    </ul>
-    {%- endif -%}
-
-    {%- if memos.size > 0 -%}
-    <h3>Evidence memos</h3>
-    <ul class="process-list">
-      {%- for d in memos -%}
-      <li><a href="{{ d.url | relative_url }}">{{ d.title }}</a>{% if d.blurb %}<span class="process-blurb">{{ d.blurb }}</span>{% endif %}</li>
-      {%- endfor -%}
-    </ul>
-    {%- endif -%}
-
-    {%- if digests.size > 0 -%}
-    <h3>Digests</h3>
-    <ul class="process-list">
-      {%- for d in digests -%}
-      <li><a href="{{ d.url | relative_url }}">{{ d.title }}</a>{% if d.blurb %}<span class="process-blurb">{{ d.blurb }}</span>{% endif %}</li>
-      {%- endfor -%}
-    </ul>
-    {%- endif -%}
-  </aside>
-  {%- endif -%}
-
+    <div class="doc-body">
+      {%- comment -%} If the body opens with its own <h1>, drop it (the title is shown above). {%- endcomment -%}
+      {%- assign _lead = content | lstrip | slice: 0, 3 -%}
+      {%- if _lead == '<h1' -%}
+        {%- assign _parts = content | split: '</h1>' -%}
+        {{ _parts | slice: 1, 500 | join: '</h1>' }}
+      {%- else -%}
+        {{ content }}
+      {%- endif -%}
+    </div>
+  </article>
 </div>
 
 <script src="{{ '/assets/js/toc.js' | relative_url }}" defer></script>

@@ -5,14 +5,11 @@ author:  Lucian Cosinschi
 # Used for the <meta name="description"> and social previews.
 description: "Thoughts, open questions, and research notes on competence development and learning systems."
 
-# Profile photo. Drop your real photo into assets/img/ and point this at it
-# (e.g. /assets/img/profile.jpg). Nothing else needs to change.
+# Profile photo — drop a file in assets/img/ and point this at it.
 avatar: /assets/img/profile.png
 
 # ── Contact links (shown under your name) ────────────────────────
-# Handle taken from your CV (linkedin.com/in/cosinschi). Change if it's wrong.
 linkedin: "https://www.linkedin.com/in/cosinschi"
-# Uncomment either of these to add the link — no other edits needed:
 # email:  lucian.cosinschi@gmail.com
 # github: https://github.com/LucianCosinschi
 
@@ -23,25 +20,27 @@ baseurl: ""
 # ── Build ────────────────────────────────────────────────────────
 markdown: kramdown
 kramdown:
-  auto_ids: true          # gives every heading an id -> anchor links + TOC
-permalink: pretty
+  auto_ids: true          # heading ids -> anchor links + table of contents
 
+# Every markdown file in _content/ becomes a page at /<slug>/ and — unless its
+# front matter says `feed: false` — a card on the home page. Front matter:
+#   title:    heading + feed label            (required)
+#   date:     YYYY-MM-DD, orders the feed      (required)
+#   summary:  one line under the feed title    (optional)
+#   slug:     the URL is /<slug>/              (optional; otherwise from title)
+#   feed:     false to keep it off the home    (optional)
 collections:
   content:
-    output: true          # each document becomes its own page
+    output: true
+    permalink: /:slug/
 
 defaults:
-  - scope:
-      path: ""
-      type: content
-    values:
-      layout: document
+  - scope: { path: "", type: content }
+    values: { layout: document }
 
-# Keep build output and tooling out of the site.
 exclude:
   - Gemfile
   - Gemfile.lock
-  - bin/
   - README.md
   - vendor/
   - .github/

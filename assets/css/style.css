@@ -1,8 +1,11 @@
 /* ─────────────────────────────────────────────────────────────
    Lucian Cosinschi — barebones stylesheet.
    Plain system sans, black on white, blue underlined links,
-   hairline rules, lots of whitespace. No cards, no pills, no
-   accent colour. A minimal dark mode inverts plainly.
+   hairline rules, lots of whitespace. A minimal dark mode inverts.
+
+   Layout: one narrow column everywhere. The home page splits into
+   identity + feed on wide screens; a long document grows a sticky
+   Contents column on the left (added by assets/js/toc.js).
    ───────────────────────────────────────────────────────────── */
 
 :root {
@@ -15,7 +18,7 @@
   --font:   -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --fs:     1.125rem;   /* ~18px */
   --lh:     1.55;
-  --measure: 44rem;     /* page column */
+  --measure: 44rem;     /* the reading column */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,53 +50,35 @@ img { max-width: 100%; height: auto; }
   margin: 0 auto;
   padding: 0 20px;
 }
-
 .site-main { padding: 32px 0 64px; }
 
-/* Links: plain blue, underlined. */
 a { color: var(--link); }
 a:hover { text-decoration: none; }
-
 :focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
 
-.skip-link {
-  position: absolute;
-  left: -9999px;
-}
+.skip-link { position: absolute; left: -9999px; }
 .skip-link:focus {
   left: 12px; top: 12px;
   background: var(--bg); padding: 6px 10px; border: 1px solid var(--rule);
 }
 
-/* ── Header + nav ─────────────────────────────────────────── */
-.site-header { border-bottom: 1px solid var(--rule); }
-.site-header .wrap {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 8px 28px;
-  padding-top: 18px;
-  padding-bottom: 18px;
-}
-.wordmark {
-  font-weight: 700;
-  text-decoration: none;
-  color: var(--text);
-  margin-right: auto;
-}
-.site-nav ul {
-  list-style: none; margin: 0; padding: 0;
-  display: flex; flex-wrap: wrap; gap: 8px 22px;
-}
-.site-nav a { color: var(--muted); text-decoration: none; }
-.site-nav a:hover { color: var(--text); text-decoration: underline; }
-.site-nav a[aria-current="page"] { color: var(--text); }
+.muted { color: var(--muted); }
 
-/* ── Home: intro (photo, then blurb in a narrow column) ───── */
-.intro {
-  max-width: 34rem;      /* the narrow column */
-  margin: 0 0 8px;
+/* ── Header + footer ──────────────────────────────────────── */
+.site-header { border-bottom: 1px solid var(--rule); }
+.site-header .wrap { padding-top: 18px; padding-bottom: 18px; }
+.wordmark { font-weight: 700; text-decoration: none; color: var(--text); }
+.wordmark:hover { color: var(--link); }
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding: 20px 0;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
+
+/* ── Home: identity block ─────────────────────────────────── */
+.intro { max-width: 34rem; margin: 0 0 8px; }
 .avatar {
   width: 110px; height: 110px;
   border-radius: 50%;
@@ -111,36 +96,21 @@ a:hover { text-decoration: none; }
   font-size: 0.95rem;
 }
 
-/* ── Home: dated feed ─────────────────────────────────────── */
+/* ── Home: the feed ───────────────────────────────────────── */
 .feed { margin-top: 40px; max-width: var(--measure); }
 .feed-heading {
-  font-size: 0.95rem;
-  color: var(--muted);
-  font-weight: 600;
-  margin: 0 0 4px;
-  padding-bottom: 6px;
+  font-size: 0.95rem; font-weight: 600; color: var(--muted);
+  margin: 0 0 4px; padding-bottom: 6px;
   border-bottom: 1px solid var(--rule);
 }
 .feed-list { list-style: none; margin: 0; padding: 0; }
 .feed-list > li { padding: 18px 0; border-bottom: 1px solid var(--rule); }
-.feed-date { margin: 0; color: var(--muted); font-size: 0.65rem; }
-.feed-title { margin: 2px 0 6px; font-size: 1.2rem; font-weight: 600; }
-.feed-title a { }
+.feed-title { margin: 0 0 6px; font-size: 1.2rem; font-weight: 600; }
 .feed-note { margin: 0; }
 
-/* ── Home: two-column grid (identity · feed) ──────────────── */
-/* Stacked by default; becomes two columns on wide screens. */
+/* ── Home: two columns (identity · feed) on wide screens ──── */
 .home-grid > * { margin-bottom: 44px; }
 .home-grid > *:last-child { margin-bottom: 0; }
-
-.rail-heading {
-  font-size: 0.95rem;
-  color: var(--muted);
-  font-weight: 600;
-  margin: 0 0 4px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--rule);
-}
 
 @media (min-width: 58rem) {
   body.home .wrap { max-width: 62rem; }
@@ -155,39 +125,11 @@ a:hover { text-decoration: none; }
   .home-grid .feed  { margin-top: 0; }
 }
 
-.doc, .doc-body, .prose, .section-head, .doc-head, .doc-list {
-  max-width: var(--measure);
-}
-
-/* ── Headings + shared prose ──────────────────────────────── */
+/* ── A document ───────────────────────────────────────────── */
+.doc, .doc-body, .doc-head { max-width: var(--measure); }
 h1, h2, h3 { line-height: 1.25; }
-.section-head h1 { margin: 0 0 6px; font-size: 1.6rem; }
-.lede { margin: 0 0 22px; color: var(--muted); }
 
-.recent { margin-top: 40px; }
-.recent h2,
-.prose section > h2 {
-  font-size: 1.15rem;
-  margin: 0 0 4px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--rule);
-}
-.prose section { margin-bottom: 32px; }
-.prose section > h2 a { color: var(--text); text-decoration: none; }
-.prose section > h2 a:hover { text-decoration: underline; }
-
-/* ── Document / link lists ────────────────────────────────── */
-.doc-list { list-style: none; margin: 0; padding: 0; }
-.doc-list > li { padding: 12px 0; border-bottom: 1px solid var(--rule); }
-.doc-list .meta { color: var(--muted); font-size: 0.9rem; margin-left: 8px; }
-.doc-summary { margin: 4px 0 0; color: var(--muted); }
-.muted { color: var(--muted); }
-
-/* ── A single document ────────────────────────────────────── */
 .doc-head { margin-bottom: 24px; }
-.eyebrow { margin: 0 0 4px; font-size: 0.95rem; }
-.eyebrow a { color: var(--muted); text-decoration: none; }
-.eyebrow a:hover { text-decoration: underline; }
 .doc-head h1 { margin: 0 0 4px; font-size: 1.7rem; }
 .doc-meta { margin: 0; color: var(--muted); font-size: 0.9rem; }
 
@@ -200,60 +142,33 @@ h1, h2, h3 { line-height: 1.25; }
 }
 .doc-body hr { border: none; border-top: 1px solid var(--rule); margin: 28px 0; }
 
-/* Table of contents (revealed by JS when > 4 h2s) — plain */
+/* Overflow guards: code, tables, long links. */
+.doc-body pre {
+  overflow-x: auto; padding: 12px 14px;
+  background: rgba(127,127,127,0.10); border-radius: 4px; font-size: 0.9rem;
+}
+.doc-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+.doc-body :not(pre) > code {
+  background: rgba(127,127,127,0.12); padding: 0.1em 0.3em; border-radius: 3px;
+}
+.doc-body table {
+  display: block; overflow-x: auto; width: 100%;
+  border-collapse: collapse; font-size: 0.95rem;
+}
+.doc-body th, .doc-body td {
+  border: 1px solid var(--rule); padding: 6px 10px; text-align: left;
+}
+.doc-body a { overflow-wrap: anywhere; }
+
+/* ── Table of contents (added by toc.js when there are >4 h2s) ── */
 .toc { margin: 20px 0 28px; }
 .toc[hidden] { display: none; }
 .toc-title { margin: 0 0 4px; font-size: 0.95rem; color: var(--muted); }
 .toc ul { list-style: none; margin: 0; padding: 0; }
 .toc li { margin: 2px 0; }
-
-/* ── Links page: plain list, no cards ─────────────────────── */
-.link-list { list-style: none; margin: 0; padding: 0; }
-.link-list > li { padding: 16px 0; border-bottom: 1px solid var(--rule); }
-.link-title { margin: 0; font-size: 1.1rem; font-weight: 600; }
-.link-source { margin: 2px 0 6px; color: var(--muted); font-size: 0.9rem; }
-.link-note { margin: 0; }
-.link-tag { margin: 6px 0 0; color: var(--muted); font-size: 0.85rem; }
-
-/* ── Overflow guards: code, tables, long URLs ─────────────── */
-.doc-body pre, .prose pre {
-  overflow-x: auto;
-  padding: 12px 14px;
-  background: rgba(127,127,127,0.10);
-  border-radius: 4px;
-  font-size: 0.9rem;
-}
-.doc-body code, .prose code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.9em;
-}
-.doc-body :not(pre) > code, .prose :not(pre) > code {
-  background: rgba(127,127,127,0.12);
-  padding: 0.1em 0.3em; border-radius: 3px;
-}
-.doc-body table, .prose table {
-  display: block; overflow-x: auto; width: 100%;
-  border-collapse: collapse; font-size: 0.95rem;
-}
-.doc-body th, .doc-body td, .prose th, .prose td {
-  border: 1px solid var(--rule); padding: 6px 10px; text-align: left;
-}
-.doc-body a, .prose a, .link-title a { overflow-wrap: anywhere; }
-
-/* ── Breadcrumb (process pages) ───────────────────────────── */
-.crumb {
-  margin: 0 0 18px;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-.crumb a { color: var(--muted); }
-
-/* ── Long documents: Contents column + content (+ Process) ─── */
-/* Stacked by default (Contents box on top, then content, then Process below).
-   On wide screens the grid promotes Contents to a sticky left column, and —
-   for reports — Process to a right column. .has-toc is added by toc.js only
-   when a table of contents is actually shown. */
-
 .doc-toc { align-self: start; font-size: 0.85rem; }
 .doc-toc li { line-height: 1.3; }
 
@@ -261,63 +176,17 @@ h1, h2, h3 { line-height: 1.25; }
 .back-to-contents a { color: var(--muted); text-decoration: none; }
 .back-to-contents a:hover { color: var(--link); text-decoration: underline; }
 
-.report-rail { margin-top: 48px; padding-top: 8px; border-top: 2px solid var(--rule); }
-.rail-intro { margin: 8px 0 14px; color: var(--muted); font-size: 0.9rem; }
-.report-rail h3 { margin: 22px 0 6px; font-size: 0.95rem; color: var(--muted); }
-.process-list { list-style: none; margin: 0; padding: 0; }
-.process-list > li { padding: 10px 0; border-bottom: 1px solid var(--rule); }
-.process-list > li a { font-weight: 600; font-size: 0.92rem; }
-.process-blurb {
-  display: block;
-  margin-top: 2px;
-  color: var(--muted);
-  font-size: 0.85rem;
-  line-height: 1.4;
-}
-
-/* Process pages & notes: Contents (left) + content */
+/* On wide screens, promote Contents to a sticky left column. */
 @media (min-width: 54rem) {
-  body.kind-process .wrap,
-  body.kind-item    .wrap,
-  body.kind-report:not(.has-process) .wrap { max-width: 58rem; }
-  body.kind-process .doc-grid.has-toc,
-  body.kind-item    .doc-grid.has-toc,
-  body.kind-report:not(.has-process) .doc-grid.has-toc {
+  body.doc .wrap { max-width: 58rem; }
+  .doc-grid.has-toc {
     display: grid;
-    grid-template-columns: 11rem minmax(0, 44rem);
-    gap: 0 1.75rem;
+    grid-template-columns: 12rem minmax(0, 44rem);
+    gap: 0 2rem;
     align-items: start;
   }
-  body.kind-process .doc-grid.has-toc .doc-toc,
-  body.kind-item    .doc-grid.has-toc .doc-toc,
-  body.kind-report:not(.has-process) .doc-grid.has-toc .doc-toc {
+  .doc-grid.has-toc .doc-toc {
     position: sticky; top: 1rem;
     max-height: calc(100vh - 2rem); overflow: auto;
   }
-}
-
-/* Report: Contents (left) + report (centre) + Process (right) */
-@media (min-width: 60rem) {
-  body.has-process .wrap { max-width: 72rem; }
-  body.has-process .doc-grid.has-toc {
-    display: grid;
-    grid-template-columns: 11rem minmax(0, 44rem) 13rem;
-    gap: 0 1.75rem;
-    align-items: start;
-  }
-  body.has-process .doc-grid.has-toc .doc-toc {
-    position: sticky; top: 1rem;
-    max-height: calc(100vh - 2rem); overflow: auto;
-  }
-  body.has-process .doc-grid.has-toc .report-rail {
-    margin-top: 0; padding-top: 0; border-top: none;
-  }
-}
-
-/* ── Footer ───────────────────────────────────────────────── */
-.site-footer {
-  border-top: 1px solid var(--rule);
-  padding: 20px 0;
-  color: var(--muted);
-  font-size: 0.9rem;
 }

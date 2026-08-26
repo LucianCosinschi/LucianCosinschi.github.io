@@ -16,7 +16,7 @@ layout: default
     </div>
   </aside>
 
-  {%- assign items = site.content | where_exp: "d", "d.kind == 'report' or d.kind == 'item'" | sort: "date" | reverse -%}
+  {%- assign items = site.content | where_exp: "d", "d.feed != false" | sort: "date" | reverse -%}
   <section class="feed" aria-labelledby="feed-heading">
     <h2 id="feed-heading" class="feed-heading">Wonderings &amp; research</h2>
     {% if items.size > 0 %}

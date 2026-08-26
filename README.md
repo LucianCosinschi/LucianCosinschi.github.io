@@ -1,73 +1,63 @@
 # LucianCosinschi.github.io
 
-A minimal, hand-built Jekyll site — no theme, no CSS framework. One landing page
-(photo, short blurb, and a dated feed of writing & research), with each research
-project on its own page and its working process linked beneath it.
-
-**Privacy boundary:** only what lives inside this repository is ever published.
-`published: false` in a file's front matter excludes it from the build. Files
-without front matter are ignored by Jekyll and never appear.
+A minimal, hand-built Jekyll site. One landing page — photo, a short blurb, and a
+feed of writing & research — and every markdown file is its own page.
 
 Live: <https://luciancosinschi.github.io>
 
+## The whole system, in one rule
+
+Drop a markdown file into `_content/` (folders are just for your own tidiness —
+they don't affect the URL). It becomes:
+
+- a page at **`/<slug>/`**
+- a card on the **home page** — unless you add `feed: false`
+
+Put this front matter at the very top of each file:
+
+```yaml
 ---
-
-## How content is organised
-
-```
-_content/
-  My Research Project/                 ← a "project"
-    the-main-report.md                 → the REPORT, at /my-research-project/
-    process/                           ← the working trail
-      00-RESEARCH-LOG.md               → /my-research-project/process/00-research-log/
-      memos/A1-....md                  → linked under "Process" on the report
-      digests/DIGEST-A1-....md
-  a-standalone-note.md                 → a feed ITEM, at /a-standalone-note/
+title: "My Title"       # heading + feed label      (required)
+date: 2026-08-26        # YYYY-MM-DD, orders the feed (required)
+summary: "One line."    # shown under the feed title  (optional)
+slug: my-title          # the URL becomes /my-title/  (optional; else from title)
+feed: false             # keep it off the home page   (optional)
+---
 ```
 
-- **Reports and standalone notes** appear in the dated feed on the home page.
-- **Process files** (anything under a `process/` folder) do **not** appear on the
-  home page. They are listed, each with a short description, under a **Process**
-  section at the bottom of their report — grouped into the research log, evidence
-  memos (ordered A1…A10), and digests.
+That's it. No plugin, no scripts, no build magic — just markdown files with front
+matter that you edit by hand.
 
-Descriptions under Process are derived automatically from each file's subtitle.
-To override one, add `blurb: "..."` (or `summary: "..."`) to that file's front
-matter. To set the note shown in the home feed for a report, add
-`summary: "..."` to the report's front matter.
+## Routine
 
-## The routine
+1. Add or edit a markdown file in `_content/` with the front matter above.
+2. Preview (optional): `bundle exec jekyll serve` → <http://localhost:4000>
+3. Commit and push (GitHub Desktop, or `git add -A && git commit -m "…" && git push`).
+   GitHub Actions builds the site and deploys it.
 
-1. **Add** a project folder (or a single `.md` note) under `_content/`.
-2. **Stamp** front matter — `title`, `date`, `slug` — from the filename/first H1:
-   ```
-   bin/ingest
-   ```
-3. **Review** what will go public, grouped, before pushing:
-   ```
-   bin/check
-   ```
-4. **Preview** locally (optional): `bundle exec jekyll serve` → <http://localhost:4000>
-5. **Push** (GitHub Desktop, or):
-   ```
-   git add -A && git commit -m "Add <project>" && git push
-   ```
-   GitHub Actions builds (custom plugin and all) and deploys.
+## Linking documents together
+
+There's no automatic nesting — you link documents by hand. The pattern used by the
+aviation report: it hides its supporting files with `feed: false`, then links them
+from a `## Process` section written directly in the report's markdown. Copy that
+for any "main document + supporting docs" set.
 
 ## Images
 
-Put images in `assets/img/`. Keep them web-sized — optimize large photos, e.g.:
-```
+Put images in `assets/img/`, kept web-sized. Optimize large photos, e.g.:
+
+```bash
 sips -Z 512 --setProperty formatOptions 72 -s format jpeg input.jpg --out assets/img/profile.jpg
 ```
-The profile photo is `assets/img/profile.jpg` (change `avatar:` in `_config.yml`
-to point elsewhere). Oversized originals should be git-ignored.
 
-## How it's wired
+The profile photo is `assets/img/profile.png`; change `avatar:` in `_config.yml`
+to point elsewhere.
 
-- `_config.yml` — a `content` collection (`output: true`).
-- `_plugins/section_pages.rb` — classifies each doc as `report` / `process` /
-  `item`, assigns permalinks, and lets templates filter with `where_exp`.
-- `_layouts/` (`home`, `document`, `default`), `_includes/`, `assets/` — hand-written.
-- `.github/workflows/build.yml` — `bundle exec jekyll build` + deploy. The Pages
-  source must be **"GitHub Actions"** (custom plugins can't run on the default build).
+## What's where
+
+- `_config.yml` — site identity, contact links, and the `/:slug/` permalink rule.
+- `_layouts/` — `default` (page shell), `home` (identity + feed), `document` (a page).
+- `_includes/` — `head`, `contacts`.
+- `assets/css/style.css` — the single stylesheet.
+- `assets/js/toc.js` — builds a sticky Contents list and "↑ Contents" links on long docs.
+- `.github/workflows/build.yml` — builds with Jekyll and deploys to GitHub Pages.
