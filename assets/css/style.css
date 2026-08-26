@@ -178,7 +178,7 @@ h1, h2, h3 { line-height: 1.25; }
 
 /* On wide screens, promote Contents to a sticky left column. */
 @media (min-width: 54rem) {
-  body.doc .wrap { max-width: 58rem; }
+  body.reading .wrap { max-width: 58rem; }
   .doc-grid.has-toc {
     display: grid;
     grid-template-columns: 12rem minmax(0, 44rem);
