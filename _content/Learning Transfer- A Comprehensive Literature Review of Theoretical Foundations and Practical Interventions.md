@@ -1,3 +1,10 @@
+---
+title: "Learning Transfer: A Comprehensive Literature Review of Theoretical Foundations and Practical Interventions"
+date: 2026-08-26
+slug: learning-transfer-a-comprehensive-literature-review-of-theoretical-foundations-and-practical-interventions
+summary: "Whether and how learning transfers across contexts — the fundamental justification for education and training. A review from Thorndike to modern meta-analyses of what we know, and what stays unresolved."
+---
+
 # Learning Transfer: A Comprehensive Literature Review of Theoretical Foundations and Practical Interventions
 
 The question of whether and how learning transfers across contexts has occupied educational researchers for over a century, producing one of psychology's most contentious debates. Transfer—defined as the application of knowledge or skills learned in one context to new situations—represents the fundamental justification for formal education and workplace training. This review synthesizes theoretical foundations, empirical evidence, and practical interventions spanning from Thorndike's seminal experiments to contemporary meta-analyses, revealing a field that has substantially advanced our understanding while leaving critical questions unresolved.

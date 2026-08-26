@@ -1,3 +1,10 @@
+---
+title: "Evidence-Based Multiplication Mastery for a 9-Year-Old Homeschooler: A Science-of-Learning Synthesis"
+date: 2026-08-26
+slug: evidence-based-multiplication-mastery-for-a-9-year-homeschooler-science-of-learning-synthesis
+summary: "What the science of learning actually recommends for teaching multiplication to a nine-year-old — turned into a concrete, evidence-based plan rather than more worksheets."
+---
+
 # Evidence-Based Multiplication Mastery for a 9-Year-Old Homeschooler: A Science-of-Learning Synthesis
 
 ## TL;DR
