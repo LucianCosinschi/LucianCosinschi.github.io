@@ -2,7 +2,7 @@
 title: "Learning to Fly the Machine That Flies"
 date: 2026-08-25
 slug: aviation-automation-learning-report
-summary: "The usual story — aviation met automation, invented crew resource management and evidence-based training, and the accidents stopped — turns out to be mostly wrong or unproven. I went back to the primary sources to work out what aviation actually did, what the evidence supports, and what genuinely transfers to AI and professional formation."
+summary: "What does the history of aviation training has to say about how automation impacted training. Can we transfer any of the insights to learning more broadely? This is Claude Research Institute so...I went back to the primary sources to work out what aviation actually did, what the evidence supports, and what  transfers to AI and professional formation."
 ---
 
 # Learning to Fly the Machine That Flies
