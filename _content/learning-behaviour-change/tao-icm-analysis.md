@@ -5,7 +5,7 @@ slug: tao-icm-analysis
 summary: "A close reading of Terence Tao's ICM lecture on AI and mathematics — its argument structure, and what he treats as the priorities. What can we take for learning in the age of AI?"
 ---
 
-# Terence Tao — "The Era of AI and What It Means for Mathematics"
+# Terence Tao: "The Era of AI and What It Means for Mathematics"
 **ICM Public Lecture · transcript analysis (argument structure + priorities)**
 Watched here: https://www.youtube.com/watch?v=M0--ZH1lOzg 
 
