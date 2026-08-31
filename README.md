@@ -1,8 +1,5 @@
 # LucianCosinschi.github.io
 
-A minimal, hand-built Jekyll site. One landing page — photo, a short blurb, and a
-feed of writing & research — and every markdown file is its own page.
-
 Live: <https://luciancosinschi.github.io>
 
 ## The whole system, in one rule
