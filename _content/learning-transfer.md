@@ -1,6 +1,6 @@
 ---
 title: "Learning Transfer: A Comprehensive Literature Review of Theoretical Foundations and Practical Interventions"
-date: 2026-08-26
+date: 2026-05-26
 slug: learning-transfer-a-comprehensive-literature-review-of-theoretical-foundations-and-practical-interventions
 summary: "Whether and how learning transfers across contexts — the fundamental justification for education and training. A review from Thorndike to modern meta-analyses of what we know, and what stays unresolved."
 ---

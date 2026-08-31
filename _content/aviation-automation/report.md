@@ -3,7 +3,7 @@ permalink: /aviation-automation/
 title: "Learning to Fly the Machine That Flies"
 date: 2026-08-25
 slug: aviation-automation-learning-report
-summary: "What does the history of aviation training has to say about how automation impacted training. Can we transfer any of the insights to learning more broadely? This is Claude Research Institute so...I went back to the primary sources to work out what aviation actually did, what the evidence supports, and what  transfers to AI and professional formation."
+summary: "Aviation has some decades of experience in dealing with automation. Is there a lesson about how might we deal with AI, both in learning and as a working tool? What does the history of aviation training has to say about how automation impacted training. This is Claude Research Institute so...I went back to the primary sources to work out what aviation actually did, what the evidence supports, and what  transfers to AI and professional formation."
 ---
 
 # Learning to Fly the Machine That Flies
