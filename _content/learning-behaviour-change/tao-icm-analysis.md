@@ -7,7 +7,7 @@ summary: "A close reading of Terence Tao's ICM lecture on AI and mathematics —
 
 # Terence Tao: "The Era of AI and What It Means for Mathematics"
 **ICM Public Lecture · transcript analysis (argument structure + priorities)**
-Watched here: https://www.youtube.com/watch?v=M0--ZH1lOzg 
+Watched [here on YouTube](https://www.youtube.com/watch?v=M0--ZH1lOzg) 
 
 ---
 
