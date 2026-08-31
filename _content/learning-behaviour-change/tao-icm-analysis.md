@@ -171,7 +171,7 @@ Simultaneously an **exact inversion of the traditional prestige ordering** (meda
 
 ---
 
-## Relevance to LVA
+## Relevance to Learning
 
 Three of his constructs are learning-architecture claims wearing mathematical clothes:
 

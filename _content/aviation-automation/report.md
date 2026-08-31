@@ -10,7 +10,7 @@ summary: "Aviation has some decades of experience in dealing with automation. Is
 
 ## How aviation rebuilt pilot training around automation, what the evidence actually supports, and what transfers
 
-**Internal research document. Sharptext / Learning Value Architecture.**
+**Internal research document.**
 Compiled August 2026 from ten parallel primary-source research streams.
 
 ---

@@ -7,7 +7,7 @@ slug: 00-research-log
 
 # Research log — aviation automation & the evolution of training
 
-**Project:** Deep research for LC (Sharptext / Learning Value Architecture).
+**Project:** Deep research.
 **Brief:** How aviation education and training evolved in response to cockpit automation — history, philosophy, implementation, evidence and contestation — with disciplined transfer to high-hazard industries, professional formation, higher education and EdTech.
 **Register:** Deep internal thinking asset. Maximum rigour, minimum polish. Length follows the material.
 **Deliverable:** `.md` report → `/Users/luvian/Documents/GitHub/AIWorkflow/frameworks/` (new subfolder), plus LVA project knowledge base.
