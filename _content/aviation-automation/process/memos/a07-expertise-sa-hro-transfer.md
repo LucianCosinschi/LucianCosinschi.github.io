@@ -2,7 +2,6 @@
 feed: false
 title: "A7 — Expertise, Situation Awareness, Organisational Reliability and Learning Transfer"
 date: 2026-08-25
-slug: a7-expertise-sa-hro-transfer
 ---
 
 # A7 — Expertise, Situation Awareness, Organisational Reliability and Learning Transfer

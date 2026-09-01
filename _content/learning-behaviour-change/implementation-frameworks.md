@@ -1,7 +1,6 @@
 ---
 title: "Implementation Frameworks for Learning"
 date: 2026-08-10
-slug: implementation-frameworks-for-learning
 summary: "A companion to the literature review: CFIR, ERIC, RE-AIM and NPT — what each implementation framework actually does, with a translation layer and a working toolkit."
 ---
 

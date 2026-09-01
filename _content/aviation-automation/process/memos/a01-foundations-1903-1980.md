@@ -2,7 +2,6 @@
 feed: false
 title: "A1 — Foundations, 1903–1980"
 date: 2026-08-24
-slug: a1-foundations-1903-1980
 ---
 
 # A1 — Foundations, 1903–1980

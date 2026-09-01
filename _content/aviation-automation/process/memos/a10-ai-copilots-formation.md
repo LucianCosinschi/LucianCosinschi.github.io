@@ -2,7 +2,6 @@
 feed: false
 title: "A10 — AI Copilots, Skill Formation and the Response of Professional Education"
 date: 2026-08-25
-slug: a10-ai-copilots-formation
 ---
 
 # A10 — AI Copilots, Skill Formation and the Response of Professional Education

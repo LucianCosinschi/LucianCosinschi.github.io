@@ -1,7 +1,6 @@
 ---
 title: "Terence Tao: \"The Era of AI and What It Means for Mathematics\""
 date: 2026-08-26
-slug: tao-icm-analysis
 summary: "A close reading of Terence Tao's ICM lecture on AI and mathematics — its argument structure, and what he treats as the priorities. What can we take for learning in the age of AI?"
 ---
 

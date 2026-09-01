@@ -2,7 +2,6 @@
 feed: false
 title: "Digest — A9: Cross-domain export and its boundary conditions"
 date: 2026-08-24
-slug: digest-a9-cross-domain-export
 ---
 
 # Digest — A9: Cross-domain export and its boundary conditions

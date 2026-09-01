@@ -1,7 +1,6 @@
 ---
 title: "Learning and Behaviour Change: A Critical Review of the Literature"
 date: 2026-06-10 12:00:00
-slug: change-and-behaviour-literature-review-v2
 summary: "I'm trying to take seriously the idea of learning as a source of change. How far can we take that? What can learning be legitimately responsible for and where other things are more important? From the individual to the team to the organization — and an honest account of when change spreads, sticks, or doesn't."
 ---
 

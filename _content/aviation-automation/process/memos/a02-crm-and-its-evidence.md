@@ -2,7 +2,6 @@
 feed: false
 title: "Crew Resource Management: Six Generations, Three Technologies, and the Evidence Problem"
 date: 2026-08-24
-slug: a2-crm-and-its-evidence
 ---
 
 # Crew Resource Management: Six Generations, Three Technologies, and the Evidence Problem
