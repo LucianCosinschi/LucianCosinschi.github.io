@@ -8,7 +8,7 @@ date: 2026-10-24
 
 **CFIR · ERIC · RE-AIM · NPT: a deep dive, the evidence on what strategies achieve, a translation layer, and a working toolkit**
 
-Companion to *Learning and Behaviour Change: A Critical Review of the Literature* (v2) and to [*Learning to Fly the Machine That Flies*](/aviation-automation/) (v2)
+Companion to [*Learning and Behaviour Change: A Critical Review of the Literature*](/learning-behaviour-change/literature-review/) (v2) and to [*Learning to Fly the Machine That Flies*](/aviation-automation/) (v2)
 
 **About this version.** This is version 2, completed on 24 October 2026.
 

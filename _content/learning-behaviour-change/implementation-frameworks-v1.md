@@ -1013,6 +1013,7 @@ Rules: two coders independently; disagreements resolved by discussion, not avera
 
 | CFIR barrier (rated ≤ −1) | Candidate ERIC strategies | Endorsement level (if using matching tool) | Selected? | Why / why not |
 |---|---|---|---|---|
+|  |  |  |  |  |
 
 **Step 2 — full specification, one row per selected strategy**
 
@@ -1108,6 +1109,7 @@ Complete the denominator column **before launch**. That is the discipline; every
 
 | Date | Site / unit | Element | Core or adaptable? | Adaptation made | Reason | Who decided | Effect observed |
 |---|---|---|---|---|---|---|---|
+|  |  |  |  |  |  |  |  |
 
 Rule: adaptations to **core** elements require explicit sign-off and are logged as fidelity failures unless approved. Adaptations to the **adaptable periphery** are logged as learning and reviewed for possible incorporation into the design.
 
